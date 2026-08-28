@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Attendance Records</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div th:replace="~{fragments/navbar :: adminNav}"></div>
+
+<div class="container">
+    <div class="alert alert-success" th:if="${success}" th:text="${success}"></div>
+
+    <div class="page-header">
+        <h1>Attendance Records</h1>
+        <a class="btn" th:href="@{/admin/attendance/new}">+ Mark Attendance</a>
+    </div>
+
+    <div class="card">
+        <table>
+            <thead>
+            <tr>
+                <th>Date</th>
+                <th>User</th>
+                <th>Role</th>
+                <th>Status</th>
+                <th>Remarks</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="record : ${records}">
+                <td th:text="${record.date}"></td>
+                <td th:text="${record.user.fullName}"></td>
+                <td th:text="${record.user.role}"></td>
+                <td>
+                    <span class="badge"
+                          th:classappend="${record.status.name() == 'PRESENT'} ? 'badge-present' : (${record.status.name() == 'ABSENT'} ? 'badge-absent' : 'badge-leave')"
+                          th:text="${record.status}"></span>
+                </td>
+                <td th:text="${record.remarks}"></td>
+                <td class="actions">
+                    <a class="btn btn-sm btn-secondary" th:href="@{/admin/attendance/{id}/edit(id=${record.id})}">Edit</a>
+                    <form th:action="@{/admin/attendance/{id}/delete(id=${record.id})}" method="post"
+                          onsubmit="return confirm('Delete this attendance record?');">
+                        <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

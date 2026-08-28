@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div th:replace="~{fragments/navbar :: adminNav}"></div>
+
+<div class="container">
+    <h1>Admin Dashboard</h1>
+    <p style="color:#6b7280;">Overview of users and attendance records.</p>
+
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="value" th:text="${totalUsers}">0</div>
+            <div class="label">Total Users</div>
+        </div>
+        <div class="stat-card">
+            <div class="value" th:text="${totalStudents}">0</div>
+            <div class="label">Students</div>
+        </div>
+        <div class="stat-card">
+            <div class="value" th:text="${totalFaculty}">0</div>
+            <div class="label">Faculty</div>
+        </div>
+        <div class="stat-card">
+            <div class="value" th:text="${totalAttendanceRecords}">0</div>
+            <div class="label">Attendance Records</div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>Quick Actions</h3>
+        <div class="actions">
+            <a class="btn" th:href="@{/admin/users/new}">+ Add User</a>
+            <a class="btn btn-secondary" th:href="@{/admin/attendance/new}">+ Mark Attendance</a>
+            <a class="btn btn-secondary" th:href="@{/admin/users}">Manage Users</a>
+            <a class="btn btn-secondary" th:href="@{/admin/attendance}">View All Attendance</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

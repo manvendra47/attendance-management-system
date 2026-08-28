@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>My Dashboard</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div th:replace="~{fragments/navbar :: userNav}"></div>
+
+<div class="container">
+    <h1 th:text="'Welcome, ' + ${currentUser.fullName}">Welcome</h1>
+    <p style="color:#6b7280;">Here's a summary of your attendance.</p>
+
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="value" th:text="${totalRecords}">0</div>
+            <div class="label">Total Records</div>
+        </div>
+        <div class="stat-card">
+            <div class="value" style="color:#16a34a;" th:text="${totalPresent}">0</div>
+            <div class="label">Present</div>
+        </div>
+        <div class="stat-card">
+            <div class="value" style="color:#dc2626;" th:text="${totalAbsent}">0</div>
+            <div class="label">Absent</div>
+        </div>
+        <div class="stat-card">
+            <div class="value" style="color:#d97706;" th:text="${totalLeave}">0</div>
+            <div class="label">Leave</div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>Recent Records</h3>
+        <table>
+            <thead>
+            <tr><th>Date</th><th>Status</th><th>Remarks</th></tr>
+            </thead>
+            <tbody>
+            <tr th:each="r : ${recentRecords}">
+                <td th:text="${r.date}"></td>
+                <td>
+                    <span class="badge"
+                          th:classappend="${r.status.name() == 'PRESENT'} ? 'badge-present' : (${r.status.name() == 'ABSENT'} ? 'badge-absent' : 'badge-leave')"
+                          th:text="${r.status}"></span>
+                </td>
+                <td th:text="${r.remarks}"></td>
+            </tr>
+            <tr th:if="${#lists.isEmpty(recentRecords)}">
+                <td colspan="3" style="text-align:center; color:#6b7280;">No attendance records yet.</td>
+            </tr>
+            </tbody>
+        </table>
+        <div style="margin-top:1rem;">
+            <a class="btn btn-secondary" th:href="@{/user/attendance}">View Full History</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

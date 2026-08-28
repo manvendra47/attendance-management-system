@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${isEdit} ? 'Edit User' : 'Add User'">User Form</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div th:replace="~{fragments/navbar :: adminNav}"></div>
+
+<div class="container">
+    <h1 th:text="${isEdit} ? 'Edit User' : 'Add New User'">User Form</h1>
+
+    <div class="card" style="max-width:500px;">
+        <form th:if="${isEdit}" th:action="@{/admin/users/{id}(id=${user.id})}" th:object="${user}" method="post">
+            <div class="form-group">
+                <label>Username</label>
+                <input type="text" th:value="${user.username}" disabled>
+            </div>
+            <div class="form-group">
+                <label for="fullName">Full Name</label>
+                <input type="text" id="fullName" th:field="*{fullName}" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" th:field="*{email}">
+            </div>
+            <div class="form-group">
+                <label for="role">Role</label>
+                <select id="role" th:field="*{role}">
+                    <option th:each="r : ${roles}" th:value="${r}" th:text="${r}"></option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="password">New Password (leave blank to keep unchanged)</label>
+                <input type="password" id="password" name="password">
+            </div>
+            <div class="form-group">
+                <label><input type="checkbox" th:field="*{enabled}" style="width:auto; display:inline-block;"> Account Enabled</label>
+            </div>
+            <div class="actions">
+                <button type="submit" class="btn">Save Changes</button>
+                <a class="btn btn-secondary" th:href="@{/admin/users}">Cancel</a>
+            </div>
+        </form>
+
+        <form th:unless="${isEdit}" th:action="@{/admin/users}" th:object="${user}" method="post">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" th:field="*{username}" required>
+            </div>
+            <div class="form-group">
+                <label for="fullNameNew">Full Name</label>
+                <input type="text" id="fullNameNew" th:field="*{fullName}" required>
+            </div>
+            <div class="form-group">
+                <label for="emailNew">Email</label>
+                <input type="email" id="emailNew" th:field="*{email}">
+            </div>
+            <div class="form-group">
+                <label for="roleNew">Role</label>
+                <select id="roleNew" th:field="*{role}">
+                    <option th:each="r : ${roles}" th:value="${r}" th:text="${r}"></option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="passwordNew">Password</label>
+                <input type="password" id="passwordNew" th:field="*{password}" required>
+            </div>
+            <div class="actions">
+                <button type="submit" class="btn">Create User</button>
+                <a class="btn btn-secondary" th:href="@{/admin/users}">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

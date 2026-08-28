@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<body>
+
+<div th:fragment="adminNav" class="navbar">
+    <a class="brand" th:href="@{/admin/dashboard}">Attendance Admin</a>
+    <div class="nav-links">
+        <a th:href="@{/admin/dashboard}">Dashboard</a>
+        <a th:href="@{/admin/users}">Manage Users</a>
+        <a th:href="@{/admin/attendance}">Attendance Records</a>
+        <span sec:authentication="name" style="margin-left:1.25rem;"></span>
+        <form th:action="@{/logout}" method="post">
+            <button type="submit" class="link-button">Logout</button>
+        </form>
+    </div>
+</div>
+
+<div th:fragment="userNav" class="navbar">
+    <a class="brand" th:href="@{/user/dashboard}">Attendance Portal</a>
+    <div class="nav-links">
+        <a th:href="@{/user/dashboard}">Dashboard</a>
+        <a th:href="@{/user/attendance}">My Attendance</a>
+        <span sec:authentication="name" style="margin-left:1.25rem;"></span>
+        <form th:action="@{/logout}" method="post">
+            <button type="submit" class="link-button">Logout</button>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

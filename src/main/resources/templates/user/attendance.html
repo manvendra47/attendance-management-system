@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>My Attendance History</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div th:replace="~{fragments/navbar :: userNav}"></div>
+
+<div class="container">
+    <h1>My Attendance History</h1>
+
+    <div class="card">
+        <table>
+            <thead>
+            <tr><th>Date</th><th>Status</th><th>Remarks</th></tr>
+            </thead>
+            <tbody>
+            <tr th:each="r : ${records}">
+                <td th:text="${r.date}"></td>
+                <td>
+                    <span class="badge"
+                          th:classappend="${r.status.name() == 'PRESENT'} ? 'badge-present' : (${r.status.name() == 'ABSENT'} ? 'badge-absent' : 'badge-leave')"
+                          th:text="${r.status}"></span>
+                </td>
+                <td th:text="${r.remarks}"></td>
+            </tr>
+            <tr th:if="${#lists.isEmpty(records)}">
+                <td colspan="3" style="text-align:center; color:#6b7280;">No attendance records yet.</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>
